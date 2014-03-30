@@ -1,2 +1,27 @@
 1	random	random	random	random	Player-1	random	100	game00001.log	
 2	random	random	random	260469756	Player-1	random	100	game00002.log	
+3	Human	Human	Human	260469756	UNDECIDED	NOBODY	0	game00003.log	USER CANCEL
+4	random	random	random	260469756	Player-1	random	100	game00004.log	
+5	random	random	random	260469756	Player-1	random	100	game00005.log	
+6	random	random	random	260469756	Player-1	random	100	game00006.log	
+7	random	random	random	260469756	Player-1	random	100	game00007.log	
+8	260469756	random	random	random	Player-1	random	100	game00008.log	
+9	random	random	random	260469756	Player-1	random	100	game00009.log	
+10	random	random	random	260469756	Player-1	random	100	game00010.log	
+11	random	random	random	260469756	Player-1	random	100	game00011.log	
+12	random	random	random	260469756	UNDECIDED	NOBODY	34	game00012.log	USER CANCEL
+14	random	random	random	260469756	Player-1	random	100	game00014.log	
+15	random	random	random	260469756	UNDECIDED	NOBODY	1	game00015.log	USER CANCEL
+16	random	random	random	260469756	Player-1	random	100	game00016.log	
+17	random	random	random	260469756	Player-1	random	100	game00017.log	
+18	random	random	random	260469756	Player-1	random	100	game00018.log	
+19	random	random	random	260469756	Player-1	random	100	game00019.log	
+21	random	random	random	260469756	Player-1	random	100	game00021.log	
+22	random	random	random	260469756	Player-1	random	100	game00022.log	
+23	random	260469756	random	random	Player-1	260469756	100	game00023.log	
+24	random	random	260469756	random	Player-1	random	100	game00024.log	
+25	260469756	random	random	random	Player-0	260469756	100	game00025.log	
+26	random	random	random	260469756	Player-1	random	100	game00026.log	
+27	random	260469756	random	random	Player-1	260469756	100	game00027.log	
+28	random	260469756	random	random	Player-1	260469756	100	game00028.log	
+29	260469756	260469756	260469756	260469756	DRAW	NOBODY	5000	game00029.log	

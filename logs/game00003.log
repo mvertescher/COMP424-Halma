@@ -1,0 +1,16 @@
+# Server version 0.08 running on 192.168.1.104:8123
+# Game ID: 3
+# Board class: halma.CCBoard
+# Timeout: 300000
+# Date: Sun Mar 30 11:31:20 EDT 2014
+# Player 1: Player-0, 'Human', running on 192.168.1.104
+# Player 2: Player-1, 'Human', running on 192.168.1.104
+# Player 3: Player-2, 'Human', running on 192.168.1.104
+# Player 4: Player-3, '260469756', running on localhost
+START Player-0 Human
+START Player-1 Human
+START Player-2 Human
+START Player-3 260469756
+GAMEOVER USER CANCEL
+UNDECIDED
+# Game ended: Sun Mar 30 11:31:40 EDT 2014
