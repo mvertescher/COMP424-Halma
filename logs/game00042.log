@@ -1,0 +1,33 @@
+# Server version 0.08 running on wpa070026.wireless.mcgill.ca:8123
+# Game ID: 42
+# Board class: halma.CCBoard
+# Timeout: 300000
+# Date: Tue Apr 01 13:57:00 EDT 2014
+# Player 1: Player-0, 'random', running on wpa070026.wireless.mcgill.ca
+# Player 2: Player-1, 'random', running on wpa070026.wireless.mcgill.ca
+# Player 3: Player-2, 'random', running on wpa070026.wireless.mcgill.ca
+# Player 4: Player-3, '260469756', running on localhost
+START Player-0 random
+START Player-1 random
+START Player-2 random
+START Player-3 260469756
+0 (3,1) (4,0)
+1 (14,2) (13,3)
+2 (1,12) (2,11)
+3 (14,14) (12,12)
+3 null null
+0 (2,1) (2,3)
+0 null null
+1 (15,3) (14,4)
+2 (3,14) (4,13)
+3 (13,13) (11,11)
+3 null null
+0 (0,2) (0,4)
+0 null null
+1 (13,2) (12,3)
+2 (1,14) (1,12)
+2 (1,12) (3,14)
+2 null null
+GAMEOVER USER CANCEL
+UNDECIDED
+# Game ended: Tue Apr 01 13:57:26 EDT 2014

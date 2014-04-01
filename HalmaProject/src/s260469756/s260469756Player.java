@@ -58,14 +58,60 @@ public class s260469756Player extends Player {
     	
     }
     
-    ArrayList<CCMove> thisTurnsMoves;
+    ArrayList<CCMove> thisTurnsMoves; // 0 - first move to n-1 last move
+    
+    long startTime;
+    long endTime;
     
     /** Implement a very stupid way of picking moves */
     public Move chooseMove(Board theboard) 
     {
+    	CCBoard board = (CCBoard) theboard;
+    	Point lastMovedPiece = board.getLastMoved();
+    	
+    	// Beginning of turn
+    	if (lastMovedPiece == null) {
+    		startTime = System.currentTimeMillis();
+    		thisTurnsMoves = MyTools.getMovesForTurn(theboard);
+    		return thisTurnsMoves.remove(0);
+    	}
+    	
+    	// End of turn 
+    	else {
+    		printMoves(board.getLegalMoveForPiece(lastMovedPiece, this.playerID));
+    		long endTime = System.currentTimeMillis() - startTime;
+    		System.out.println("ENDING: " + endTime);
+    		return thisTurnsMoves.remove(0);
+    	}
+    	
+    	//return basicMove(theboard); 
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /* 
+     * Simple agent algorithm
+     */
+    private CCMove basicMove(Board theboard) {
     	System.out.println("STARTING TO CHOOSE MOVE");
     	CCBoard board = (CCBoard) theboard;
     	Point currentPiece = board.getLastMoved();
+
     	
     	// If at the beginning of a turn 
     	if (currentPiece == null) {
@@ -78,13 +124,14 @@ public class s260469756Player extends Player {
     			// Get all the moves of the points in the base 
     			ArrayList<CCMove> moves = MyTools.getMovesForPoints(board, pointsInBase); 
     			// Pick the best move
-    			return MyTools.getBestMove(moves);
+    			return MyTools.getBestMove1(moves);
     		}
     		// If there are no pieces in the base 
     		else {
     			System.out.println("No points in base!!");
     			ArrayList<CCMove> moves = board.getLegalMoves();
-    			return MyTools.getBestMove(moves);
+    			//this.printMoves(moves);
+    			return MyTools.getBestMove1(moves);
     		}
     	}
     	
@@ -95,71 +142,13 @@ public class s260469756Player extends Player {
     		CCMove endTurn = moves.remove(0); // null to null move (end turn)
     		return endTurn;
     	}
-    	
-    	//return basicMove(theboard); 
-    }
-    
-    private CCMove basicMove(Board theboard) {
-    	System.out.println("Choosing Move....... now ..... ");
-        // Cast the arguments to the objects we want to work with
-        CCBoard board = (CCBoard) theboard;
-
-        // Get the list of legal moves.
-        ArrayList<CCMove> moves = board.getLegalMoves();
-                
-        ArrayList<Point> pieces = board.getPieces(this.playerID);
-        
-        CCMove bestMove = moves.get(0); 
-        double bestDist = 50; // Big num
-        for (CCMove move : moves) { // For every move
-        	Point to = move.getTo();
-        	
-        	if (to == null) { // Check if there is a null point 
-        		System.out.println("Null MOVE: " + move.toPrettyString());
-        		return new CCMove(this.playerID,null,null);
-        	}
-        	if ( move.getFrom().x > 3 || move.getFrom().y > 3) { // If the move is not at the goal 
-        		double d = Point.distance(to.x, to.y, goal.x, goal.y);
-        		System.out.println("Trying move : " + move.toPrettyString() + " dist = " + d);
-        		//System.out.println(d);
-        		if (d < bestDist)  {
-        			bestDist = d;
-        			bestMove = move;
-        		}
-        	}
-        	
-        }
-        System.out.println("Best move : " + bestMove.toPrettyString() + " dist = " + bestDist);
-        
-        return bestMove;
     }
     
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     
     
     /*private CCMove OLD(Board theboard) {

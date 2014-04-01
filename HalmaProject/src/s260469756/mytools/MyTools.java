@@ -133,7 +133,7 @@ public class MyTools {
 			
 			// No points in base, getBestMove
 			else {
-				return getBestMove(board.getLegalMoves()); 
+				return getBestMove1(board.getLegalMoves()); 
 			}
 	
 		}
@@ -147,27 +147,188 @@ public class MyTools {
 		return null;
 	}
 	
-	public static CCMove getBestMove(ArrayList<CCMove> moves) {
+	/*
+	 * Choose the move that moves the closest to the goal if the piece is not already in the goal
+	 */
+	public static CCMove getBestMove1(ArrayList<CCMove> moves) {
 		CCMove bestMove = moves.get(0); 
-        double bestDist = 50; // Big num
-        for (CCMove move : moves) { // For every move
+        //double bestDist = 50; // Big num
+        int bestDist = 50; // Inf 
+		for (CCMove move : moves) { // For every move
         	Point to = move.getTo();
         	if (!isInGoal(move.getFrom())) { // If the move is not at the goal 
-        		double d = to.distance(goal);
+        		//double d = to.distance(goal);
+        		int d = manhattanDistanceToGoal(to);
         		if (d < bestDist)  {
         			bestDist = d;
         			bestMove = move;
         		}
-        		if (d == bestDist && move.isHop()) // Rate hops over single moves
+        		else if (d == bestDist && move.isHop()) // Rate hops over single moves
         			bestMove = move;
         	}
         }
 		return bestMove; 
 	}
 	
-	public static int evaluateBoard(CCBoard board) {
+	private static int manhattanDistanceToGoal(Point p) {
+		return Math.abs(goal.x - p.x) + Math.abs(goal.y - p.y);
+	}
+	
+	
+	/*
+	 * 
+	 */
+	public static CCMove getBestMove2(ArrayList<CCMove> moves) {
+		CCMove bestMove = moves.get(0); 
+        //double bestDist = 50; // Big num
+        int bestDist = 50; // Inf 
+		for (CCMove move : moves) { // For every move
+			Point from = move.getFrom();
+			Point to = move.getTo();
+        	if (!isInGoal(move.getFrom())) { // If piece is not at the goal 
+        		// Want to move toward the goal
+        		if (manhattanDistanceToGoal(to) <= manhattanDistanceToGoal(from)) {
+        			
+        			
+        			
+        		}
+        	
+        		
+        		//double d = to.distance(goal);
+        		int d = manhattanDistanceToGoal(to);
+        		if (d < bestDist)  {
+        			bestDist = d;
+        			bestMove = move;
+        		}
+        		else if (d == bestDist && move.isHop()) // Rate hops over single moves
+        			bestMove = move;
+        	}
+        }
+		return bestMove; 
+	}
+	
+	
+	
+	
+	public static ArrayList<CCMove> getMovesForTurn(Board theboard) {	
+		// Determine the root board
+		CCBoard root = (CCBoard) theboard.clone();
+		// Get the root moves
+		ArrayList<CCMove> rootMoves = root.getLegalMoves();
+		int numStates = rootMoves.size();
+		// Filter the moves (optional)
+		
+		// Create the first level boards
+		ArrayList<CCBoard> firstLevelBoards = new ArrayList<CCBoard>();
+		ArrayList<CCMove> firstLevelMoves = new ArrayList<CCMove>();
+		for (CCMove m : rootMoves) {
+			CCBoard child = (CCBoard) root.clone();
+			child.move(m);
+			firstLevelMoves.add(m);
+			firstLevelBoards.add(child); 
+		}
+		
+		// Find the best board at the first level
+		CCBoard bestBoard = firstLevelBoards.get(0);
+		CCMove bestMove = firstLevelMoves.get(0);
+		CCBoard tempBoard;
+		CCMove tempMove; 
+		int bestEval = 0;
+		int tempEval;
+		for (int index = 0; index < numStates; index++) {
+			tempBoard = firstLevelBoards.get(index);
+			tempMove = firstLevelMoves.get(index);
+			tempEval = evaluateBoard(myID, tempBoard);
+			if (tempEval > bestEval) {
+				bestBoard = tempBoard;
+				bestMove = tempMove;
+				bestEval = tempEval;
+			}
+		}
+		
+		ArrayList<CCMove> turnMoves = new ArrayList<CCMove>();
+		turnMoves.add(bestMove);
+		
+		// Calculate the next move toward the goal 
+		
+		CCMove nextMove = nextBestMoveForBoard(bestBoard);
+		turnMoves.add(nextMove);
+		
+		while (nextMove.getTo() != null && nextMove.getFrom() != null) {
+			//System.out.println("NextMove = ",printLine);
+			nextMove = nextBestMoveForBoard(bestBoard);
+			turnMoves.add(nextMove);
+		}
+		
+		// Add end turn move
+		//turnMoves.add(new CCMove(myID,null,null));
+		
+		
+		return turnMoves;
+	}
+	
+	private static CCMove nextBestMoveForBoard(CCBoard board) {
+		ArrayList<CCMove> rootMoves = board.getLegalMoveForPiece(board.getLastMoved(), myID);
+		
+		int currentEval = evaluateBoard(myID, board);
+		int numStates = rootMoves.size();
+		// Filter the moves (optional)
+		
+		// Create the first level boards
+		ArrayList<CCBoard> firstLevelBoards = new ArrayList<CCBoard>();
+		ArrayList<CCMove> firstLevelMoves = new ArrayList<CCMove>();
+		for (CCMove m : rootMoves) {
+			CCBoard child = (CCBoard) board.clone();
+			child.move(m);
+			firstLevelMoves.add(m);
+			firstLevelBoards.add(child); 
+		}
+		
+		// Find the best board at the first level
+		CCBoard bestBoard = firstLevelBoards.get(0);
+		CCMove bestMove = firstLevelMoves.get(0);
+		CCBoard tempBoard;
+		CCMove tempMove; 
+		int bestEval = 0;
+		int tempEval;
+		for (int index = 0; index < numStates; index++) {
+			tempBoard = firstLevelBoards.get(index);
+			tempMove = firstLevelMoves.get(index);
+			tempEval = evaluateBoard(myID, tempBoard);
+			if (tempEval > bestEval) {
+				bestBoard = tempBoard;
+				bestMove = tempMove;
+				bestEval = tempEval;
+			}
+		}
+		
+		if (bestEval < currentEval)
+			return new CCMove(myID,null,null);
+		return bestMove;
+	}
+	
+	
+	
+	// 15*8+14*8+13*6+12*4
+	private static int MHD = 358;
+	
+	public static int evaluateBoard(int player_id, CCBoard board) {
+		if (player_id == myID) {
+			ArrayList<Point> myPieces = board.getPieces(myID);
+			int sum = 0; 
+			for (Point p : myPieces) {
+				sum += manhattanDistanceToGoal(p);
+			}
+			
+			return MHD - sum;
+		}
 		return 0;
 	}
+	
+	
+	
+	
+	
 	
 	public static void startTurnTimer() {
 		turnTimer = System.currentTimeMillis();
