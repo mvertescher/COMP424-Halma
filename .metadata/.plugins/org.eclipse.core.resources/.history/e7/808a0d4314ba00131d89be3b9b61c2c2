@@ -1,0 +1,21 @@
+package s260469756.mytools;
+
+import halma.CCBoard;
+import halma.CCMove;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class State {
+	public CCBoard board = null;
+	public ArrayList<CCMove> movesToState = new ArrayList<CCMove>();
+	//public int evaluation = -1;
+	
+	public State
+	
+	@Override
+	public Object clone() {
+		return new CCBoard((HashMap<Point, Integer>) board.clone(), turnNumber, winner, turn_player, lastMovedInTurn);
+	}
+}

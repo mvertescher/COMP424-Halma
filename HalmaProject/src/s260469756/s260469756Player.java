@@ -69,16 +69,27 @@ public class s260469756Player extends Player {
     	CCBoard board = (CCBoard) theboard;
     	Point lastMovedPiece = board.getLastMoved();
     	
+    	try { Thread.sleep(200); } catch (InterruptedException e) { e.printStackTrace(); }
+    	
     	// Beginning of turn
     	if (lastMovedPiece == null) {
     		startTime = System.currentTimeMillis();
-    		thisTurnsMoves = MyTools.getMovesForTurn(theboard);
-    		return thisTurnsMoves.remove(0);
+    		
+    		
+    		
+    		/* Modular line, replace for differnet agent */ 
+    		//thisTurnsMoves = MyTools.getMovesForTurn(theboard);
+    		thisTurnsMoves = MyTools.minMax(theboard);
+    		
+    		CCMove firstMove = thisTurnsMoves.remove(0);
+    		if (MyTools.isEndTurnMove(firstMove))
+    			board.forceWinner(this.playerID);
+    		return firstMove;
     	}
     	
     	// End of turn 
     	else {
-    		printMoves(board.getLegalMoveForPiece(lastMovedPiece, this.playerID));
+    		//printMoves(board.getLegalMoveForPiece(lastMovedPiece, this.playerID));
     		long endTime = System.currentTimeMillis() - startTime;
     		System.out.println("ENDING: " + endTime);
     		return thisTurnsMoves.remove(0);
@@ -198,8 +209,7 @@ public class s260469756Player extends Player {
         }
         System.out.println("Best move : " + bestMove.toPrettyString() + " dist = " + bestDist);
         
-        try { Thread.sleep(000); } 
-        catch (InterruptedException e) { e.printStackTrace(); }
+        try { Thread.sleep(000); } catch (InterruptedException e) { e.printStackTrace(); }
         
        
         // Use my tool for nothing

@@ -1,0 +1,13 @@
+package s260469756.mytools;
+
+import halma.CCBoard;
+import halma.CCMove;
+
+import java.util.ArrayList;
+
+public class State {
+	public CCBoard board = null;
+	public ArrayList<CCMove> movesToState = new ArrayList<CCMove>();
+	public int evaluation = -1;
+	
+}

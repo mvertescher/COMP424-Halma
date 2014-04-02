@@ -1,0 +1,25 @@
+# Server version 0.08 running on 192.168.1.104:8123
+# Game ID: 64
+# Board class: halma.CCBoard
+# Timeout: 300000
+# Date: Tue Apr 01 20:51:43 EDT 2014
+# Player 1: Player-0, 'random', running on 192.168.1.104
+# Player 2: Player-1, 'random', running on 192.168.1.104
+# Player 3: Player-2, 'random', running on 192.168.1.104
+# Player 4: Player-3, '260469756', running on localhost
+START Player-0 random
+START Player-1 random
+START Player-2 random
+START Player-3 260469756
+0 (2,0) (4,2)
+0 (4,2) (2,0)
+0 (2,0) (4,2)
+0 (4,2) (2,0)
+0 (2,0) (4,2)
+0 null null
+1 (14,3) (14,4)
+2 (0,12) (2,12)
+2 null null
+GAMEOVER USER CANCEL
+UNDECIDED
+# Game ended: Tue Apr 01 20:52:41 EDT 2014

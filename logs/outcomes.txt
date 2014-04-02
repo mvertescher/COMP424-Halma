@@ -38,3 +38,44 @@
 40	260469756	260469756	260469756	random	Player-0	260469756	100	game00040.log	
 41	260469756	random	random	random	Player-0	260469756	100	game00041.log	
 42	random	random	random	260469756	UNDECIDED	NOBODY	2	game00042.log	USER CANCEL
+43	random	random	random	260469756	UNDECIDED	NOBODY	2	game00043.log	USER CANCEL
+44	random	random	random	260469756	UNDECIDED	NOBODY	2	game00044.log	USER CANCEL
+45	random	random	random	260469756	Player-1	random	2	game00045.log	ILLEGAL MOVE: Player 3 move from (N,13) to (L,13)
+46	random	random	random	260469756	Player-1	random	2	game00046.log	ILLEGAL MOVE: Player 3 move from (N,13) to (L,13)
+48	random	random	random	260469756	UNDECIDED	NOBODY	9	game00048.log	USER CANCEL
+49	random	random	random	260469756	UNDECIDED	NOBODY	10	game00049.log	USER CANCEL
+50	random	random	random	260469756	UNDECIDED	NOBODY	10	game00050.log	USER CANCEL
+51	random	random	random	260469756	UNDECIDED	NOBODY	26	game00051.log	USER CANCEL
+52	random	random	random	260469756	UNDECIDED	NOBODY	31	game00052.log	USER CANCEL
+53	random	random	random	260469756	UNDECIDED	NOBODY	0	game00053.log	USER CANCEL
+54	random	random	random	260469756	UNDECIDED	NOBODY	0	game00054.log	USER CANCEL
+55	random	random	random	260469756	Player-1	random	33	game00055.log	TIMEOUT Player-3
+56	random	random	random	260469756	Player-1	random	100	game00056.log	
+57	260469756	260469756	260469756	260469756	DRAW	NOBODY	5000	game00057.log	
+58	260469756	260469756	260469756	260469756	DRAW	NOBODY	5000	game00058.log	
+59	random	random	260469756	260469756	Player-1	random	100	game00059.log	
+60	260469756	random	random	260469756	Player-0	260469756	100	game00060.log	
+61	random	260469756	260469756	random	Player-1	260469756	100	game00061.log	
+62	random	random	random	260469756	UNDECIDED	NOBODY	0	game00062.log	USER CANCEL
+63	random	random	random	260469756	UNDECIDED	NOBODY	0	game00063.log	USER CANCEL
+64	random	random	random	260469756	UNDECIDED	NOBODY	0	game00064.log	USER CANCEL
+65	random	random	random	260469756	Player-1	random	1	game00065.log	ILLEGAL MOVE: Player 3 move from (N,13) to (L,13)
+66	random	random	random	260469756	Player-1	random	1	game00066.log	ILLEGAL MOVE: Player 3 move from (N,13) to (L,13)
+67	random	random	random	260469756	Player-1	random	0	game00067.log	ILLEGAL MOVE: Player 3 move from (N,14) to (L,16)
+68	random	random	random	260469756	Player-1	random	0	game00068.log	ILLEGAL MOVE: Player 3 move from (N,14) to (L,16)
+70	random	random	random	260469756	UNDECIDED	NOBODY	2	game00070.log	USER CANCEL
+71	260469756	random	random	random	UNDECIDED	NOBODY	1	game00071.log	USER CANCEL
+73	Human	Human	Human	Human	UNDECIDED	NOBODY	0	game00073.log	USER CANCEL
+75	random	random	random	260469756	UNDECIDED	NOBODY	0	game00075.log	USER CANCEL
+76	random	random	random	260469756	Player-1	random	100	game00076.log	
+77	random	random	random	260469756	Player-1	random	100	game00077.log	
+78	260469756	random	random	260469756	Player-0	260469756	100	game00078.log	
+79	260469756	260469756	260469756	random	Player-1	260469756	100	game00079.log	
+80	260469756	260469756	260469756	random	Player-1	260469756	101	game00080.log	
+81	random	260469756	260469756	260469756	Player-1	260469756	100	game00081.log	
+82	random	260469756	260469756	260469756	Player-1	260469756	100	game00082.log	
+83	random	260469756	260469756	260469756	Player-1	260469756	100	game00083.log	
+84	random	260469756	260469756	260469756	Player-1	260469756	100	game00084.log	
+85	random	260469756	260469756	260469756	Player-1	260469756	100	game00085.log	
+86	260469756	260469756	260469756	260469756	DRAW	NOBODY	5000	game00086.log	
+87	260469756	260469756	260469756	260469756	UNDECIDED	NOBODY	160	game00087.log	USER CANCEL

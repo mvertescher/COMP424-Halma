@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;s260469756.mytools.MinMaxTree&apos; to &apos;MinMaxTreeNode&apos;&#x0A;- Original project: &apos;HalmaProject&apos;&#x0A;- Original element: &apos;s260469756.mytools.MinMaxTree&apos;&#x0A;- Renamed element: &apos;s260469756.mytools.MinMaxTreeNode&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MinMaxTree&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;s260469756.mytools{MinMaxTree.java[MinMaxTree" matchStrategy="1" name="MinMaxTreeNode" qualified="false" references="true" similarDeclarations="false" stamp="1396390573299" textual="false" version="1.0"/>
+</session>

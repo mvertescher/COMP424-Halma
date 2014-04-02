@@ -1,0 +1,19 @@
+package s260469756.mytools;
+
+import halma.CCBoard;
+
+public class MinMaxTreeNode {
+	
+	private parent
+	private CCBoard board;
+	private int evaluation;
+	
+	public MinMaxTreeNode(CCBoard b, int eval) {
+		board = b;
+		evaluation = eval;
+	}
+	
+	
+	
+	
+}
