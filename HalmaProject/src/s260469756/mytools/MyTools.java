@@ -355,6 +355,7 @@ public class MyTools {
 		// for every legal hop, add all other legal hops from point
 		
 		ArrayList<State> firstStates = buildFirstStates(rootBoard);
+		System.out.println("NUMBER OF FIRST LEVEL STATES CALCULATED: " + firstStates.size());
 		ArrayList<CCMove> moves = getMovesToBestState(firstStates);
 		moves.add(new CCMove(myID,null,null)); // Add the end turn move
 		
@@ -412,7 +413,6 @@ public class MyTools {
 	public static ArrayList<State> buildFirstStates(CCBoard root) {
 		ArrayList<State> states = new ArrayList<State>(); 
 		ArrayList<CCMove> firstMoves = root.getLegalMoves();
-		ArrayList<CCMove> hopMoves = new ArrayList<CCMove>();
 		State s;
 		CCBoard nextBoard; 
 		for (CCMove m : firstMoves) {
@@ -425,15 +425,10 @@ public class MyTools {
 				states.add(s);
 			}
 			// If the move is a hop 
-			else 
-				hopMoves.add(m);
-		}
-		
-		ArrayList<State> hopStates = null;
-		for (CCMove hm : hopMoves) { 
-			State temp = new State(root,hm);
-			hopStates = getHopStates(temp,hm);
-			states.addAll(hopStates);
+			else {
+				State temp = new State(root,m); // BUG, getting more states than needed
+				states.addAll(getHopStates(temp,m));
+			}
 		}
 		
 		return states;
@@ -441,19 +436,13 @@ public class MyTools {
 	
 	
 	public static ArrayList<State> getHopStates(State root, CCMove lastMove) {
-		ArrayList<State> newStates = new ArrayList<State>();
 		ArrayList<State> statesQueue = new ArrayList<State>();
 		State currentState; 
-		//ArrayList<CCMove> movesQueue = new ArrayList<CCMove>();
 		ArrayList<Point> visited = new ArrayList<Point>();
-		//movesQueue.add(firstMove);
 		
 		int index = 0;
 		statesQueue.add(root);
-		//index++;
-		//newStates.add(root);
 		visited.add(lastMove.getFrom());
-		
 		
 		
 		while (index != statesQueue.size()) {
@@ -468,13 +457,10 @@ public class MyTools {
 					newState.board.move(m);
 					newState.movesToState.add(m);
 					statesQueue.add(newState);
-					//newStates.add(newState);
 					visited.add(m.getTo());
 				}
 			}
 		}
-		
-		
 		return statesQueue;
 	}
 
@@ -545,10 +531,18 @@ public class MyTools {
 		int bestEval = 0; 
 		for (State s : states) {
 			CCMove firstMove = s.movesToState.get(0);
+			Point endPoint = s.board.getLastMoved();
 			int eval = mmEval(myID,s.board);
-			if (isInGoal(firstMove.getFrom())) 
-				eval -= 2;
-			if (eval > bestEval) {
+			
+			// Lower eval if moving in goal
+			//if (isInGoal(firstMove.getFrom())) 
+				//eval -= 2;
+			
+			// Lower eval if piece is moving away from center diagnal
+			if (endPoint != null)
+				eval -= manhattanDistanceToDiagonal(endPoint); // * 2
+				
+			if (eval > bestEval || (eval == bestEval && firstMove.isHop())) {
 				bestEval = eval;
 				bestState = s;
 				
@@ -556,29 +550,101 @@ public class MyTools {
 				CCMove finalMove = s.movesToState.get(s.movesToState.size() - 1);
 				if (!isInGoal(firstMove.getFrom()) && isInGoal(finalMove.getTo()))
 					return s.movesToState;
-				
 			}
+
+			
 		}
 		return bestState.movesToState;
 	}
 	
 	
 	
-	
+	/*
+	 * Evaluate a particular board state.
+	 * Better boards have a higher evaluation.
+	 */
 	public static int mmEval(int player_id, CCBoard board) {
 		if (player_id == myID) {
 			ArrayList<Point> myPieces = board.getPieces(myID);
 			int sum = 0; 
 			for (Point p : myPieces) {
 				sum += manhattanDistanceToGoal(p);
+				//sum += manhattanDistanceToDiagonal(p);
 			}
 			
 			return MHD - sum;
 		}
 		return 0;
 	}
+
+	public static int manhattanDistanceToDiagonal(Point p) {
+		return Math.abs(p.x - p.y);
+	}
 	
 	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Fast first level calculations: 
+	 * 1. Get all points, pieces
+	 * 2. For each piece get legal moves 
+	 * 3. For each piece maintain a visited list
+	 * 4. Iterate though legal moves
+	 * 		a. If no hop and not visited, add state
+	 * 		b. If hop and not visited, add all states from hops that have not been visited 
+	 * 
+	 */
+	
+	public static ArrayList<CCBoard> fastStates(CCBoard root) {
+		ArrayList<CCBoard> states = new ArrayList<CCBoard>(); 
+		CCBoard board, temp;
+		ArrayList<CCMove> moves, pointMoves;
+		ArrayList<Point> visited = new ArrayList<Point>();
+		ArrayList<Point> pieces = root.getPieces(myID);
+		
+		for (Point p : pieces) {
+			moves = root.getLegalMoveForPiece(p, myID);
+			for (CCMove move : moves) {
+				if (!visited.contains(move.getTo())) {
+					if (!move.isHop()) {
+						board = (CCBoard) root.clone();
+						board.move(move);
+						states.add(board);
+						visited.add(move.getTo());
+					}
+					else { // Hop Move
+						int queueHead = states.size();
+						
+						board = (CCBoard) root.clone();
+						board.move(move);
+						states.add(board);
+						visited.add(move.getTo());
+						
+						while (queueHead != states.size()) {
+							board = states.get(queueHead);
+							queueHead += 1;
+							pointMoves = board.getLegalMoveForPiece(board.getLastMoved(), myID);
+							for (CCMove m : pointMoves) {
+								if (m.isHop() && !visited.contains(m.getTo())) {
+									temp = (CCBoard) root.clone();
+									temp.move(m);
+									states.add(temp);
+									visited.add(m.getTo());
+								}
+							}	
+						}
+					}
+				}
+			}
+			visited.clear();
+		}
+		
+		return null;
+	}
 	
 	
 	
