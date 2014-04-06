@@ -6,7 +6,7 @@ import halma.CCMove;
 import java.util.ArrayList;
 import java.util.Random;
 
-import s260469756.mytools.MyTools;
+import s111111111.mytools.MyTools;
 
 import java.awt.Point;
 
@@ -43,7 +43,7 @@ public class s111111111Player extends Player {
     {
     	CCBoard board = (CCBoard) theboard;
     	Point lastMovedPiece = board.getLastMoved();
-    	
+ 
     	//try { Thread.sleep(200); } catch (InterruptedException e) { e.printStackTrace(); }
     	
     	// Beginning of turn
@@ -52,10 +52,16 @@ public class s111111111Player extends Player {
     		System.out.println("Starting Watch");
     		System.out.println("Turns Played: " + board.getTurnsPlayed());
     		
+    		// If all pieces are in the goal, return endturn
+    		if (MyTools.pointsInGoal(board) == 13)
+    			return new CCMove(this.playerID,null,null);
     		
     		/* Modular line, replace for differnet agent */ 
     		//thisTurnsMoves = MyTools.getMovesForTurn(theboard);
-    		thisTurnsMoves = MyTools.minMax(theboard);
+    		thisTurnsMoves = MyTools.fastGetMovesForTurn(theboard);
+    		
+    		//System.out.println("Num moves for turn = " + thisTurnsMoves.size());
+    		//printMoves(thisTurnsMoves);
     		
     		CCMove firstMove = thisTurnsMoves.remove(0);
     		//if (MyTools.isEndTurnMove(firstMove))
@@ -68,7 +74,7 @@ public class s111111111Player extends Player {
     		//printMoves(board.getLegalMoveForPiece(lastMovedPiece, this.playerID));
     		if (thisTurnsMoves.size() == 1) { // If there is one move left to make
     			long endTime = System.currentTimeMillis() - startTime;
-    			System.out.println("TURNTIMER ENDING: " + endTime + "Millis");
+    			System.out.println("TURNTIMER ENDING: " + endTime + " Millis --------------------------------------------------------------------------");
     		}
     		return thisTurnsMoves.remove(0);
     	}

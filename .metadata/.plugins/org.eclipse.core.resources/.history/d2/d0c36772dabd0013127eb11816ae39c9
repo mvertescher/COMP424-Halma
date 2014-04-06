@@ -1,0 +1,44 @@
+package s111111111.mytools;
+
+import halma.CCBoard;
+import halma.CCMove;
+
+import java.util.ArrayList;
+
+public class State {
+	public CCBoard board;
+	public CCMove lastMove;
+	public State lastState;
+	pubiic
+	//public int evaluation = -1;
+	
+	public State() {
+		board = null;
+		lastMove = null;
+		lastState = null;
+	}
+	
+	public State(CCBoard b, CCMove m, State s) {
+		board = b;
+		lastMove = m;
+		lastState = s;
+	}
+	
+	//public State(CCBoard b, CCBoard lastBoard) {
+	//	board = (CCBoard) b.clone();
+		
+	//}
+	
+	public State generateNextState(CCMove m) {
+		State s = new State((CCBoard) board.clone(), m, this);
+		s.board.move(m);
+		return s;
+	}
+
+	
+	//@Override
+	//public Object clone() {
+	//	return new State((CCBoard) board.clone(), lastMove);
+	//}
+	
+}

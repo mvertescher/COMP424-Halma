@@ -1,0 +1,100 @@
+package s111111111;
+
+import halma.CCBoard;
+import halma.CCMove;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import s111111111.mytools.MyTools;
+
+import java.awt.Point;
+
+import boardgame.Board;
+import boardgame.Move;
+import boardgame.Player;
+
+/**
+ *A random Halma player.
+ */
+public class s111111111Player extends Player {
+    
+    /** Provide a default public constructor */
+    public s111111111Player() { super("111111111"); }
+    public s111111111Player(String s) { super(s); }
+    
+    public Board createBoard() { return new CCBoard(); }
+
+    public void gameStarted( String msg ) { 
+    	System.out.println( "Game started: " + msg ); 
+    	
+    	System.out.println( "Player id: " + this.playerID );
+    	MyTools.initCorner(this.playerID);
+
+    }
+    
+    ArrayList<CCMove> thisTurnsMoves; // 0 - first move to n-1 last move
+    
+    long startTime;
+    long endTime;
+    
+    /** Implement a very stupid way of picking moves */
+    public Move chooseMove(Board theboard) 
+    {
+    	CCBoard board = (CCBoard) theboard;
+    	Point lastMovedPiece = board.getLastMoved();
+    	
+    	//try { Thread.sleep(200); } catch (InterruptedException e) { e.printStackTrace(); }
+    	
+    	// Beginning of turn
+    	if (lastMovedPiece == null) {
+    		startTime = System.currentTimeMillis();
+    		System.out.println("Starting Watch");
+    		System.out.println("Turns Played: " + board.getTurnsPlayed());
+    		
+    		
+    		/* Modular line, replace for differnet agent */ 
+    		//thisTurnsMoves = MyTools.getMovesForTurn(theboard);
+    		thisTurnsMoves = MyTools.fastGetMovesForTurn(theboard);
+    		System.out.println("Num moves for turn = " + thisTurnsMoves.size());
+    		
+    		CCMove firstMove = thisTurnsMoves.remove(0);
+    		//if (MyTools.isEndTurnMove(firstMove))
+    		//	board.forceWinner(this.playerID);
+    		return firstMove;
+    	}
+    	
+    	// End of turn 
+    	else {
+    		//printMoves(board.getLegalMoveForPiece(lastMovedPiece, this.playerID));
+    		if (thisTurnsMoves.size() == 1) { // If there is one move left to make
+    			long endTime = System.currentTimeMillis() - startTime;
+    			System.out.println("TURNTIMER ENDING: " + endTime + " Millis --------------------------------------------------------------------------");
+    		}
+    		return thisTurnsMoves.remove(0);
+    	}
+    	
+    	//return basicMove(theboard); 
+    }
+    
+    
+    
+  
+
+    private void printMoves(ArrayList<CCMove> moves) {
+    	for (CCMove m : moves) {
+    		System.out.println(m.toPrettyString()); 
+    	}
+    }
+    
+    
+    private void printPiecesAndID(ArrayList<Point> pieces) {
+    	System.out.println("My pieces: ");
+        for (Point p : pieces) {
+        	System.out.print("("+p.x+","+p.y+")  ");
+        }
+        System.out.println();
+        
+        System.out.println("Player: " + this.playerID);
+    }
+}
